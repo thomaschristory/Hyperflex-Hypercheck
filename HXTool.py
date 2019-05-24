@@ -2,7 +2,7 @@
 """
 Created on Fri Mar  9 13:22:07 2018
 Updated on Thu May 9
-@author: Kiranraj(kjogleka), Himanshu(hsardana), Komal(kpanzade)
+@author: Kiranraj(kjogleka), Himanshu(hsardana), Komal(kpanzade), Avinash (avshukla)
 """
 import warnings
 
@@ -165,6 +165,7 @@ def thread_geteth0ip(ip, hxusername, hxpassword, time_out):
         msg = "\r\nSSH connection established to HX Cluster: " + ip + "\r"
         log_msg(INFO, msg)
         # log_msg("", msg)
+        # cmd = "hostname -i"
         cmd = "ifconfig eth0 | grep 'inet addr:' | cut -d: -f2| cut -d' ' -f1"
         hxip = execmd(cmd)
         hxips.extend(hxip)
@@ -1163,6 +1164,8 @@ def create_main_report():
     # create main report file
     filename = "HX_Tool_Main_Report.txt"
     with open(filename, "w") as fh:
+        fh.write("\t\t\tHX Health Check " + str(ver))
+        fh.write("\r\n")
         fh.write("\t\t\tHX Tool Main Report:")
         fh.write("\r\n")
         fh.write("#" * 80)
@@ -1225,8 +1228,13 @@ if __name__ == "__main__":
     log_start(log_file, log_name, INFO)
 
     # RSA_KEY_FILE = "/etc/ssh/ssh_host_rsa_key"
+    # HX Script version
+    global ver
+    ver = 8.0
+    print("\n\t\t HX Health Check " + str(ver))
+    log_msg(INFO, "HX Health Check " + str(ver) + "\r")
     # HX Controller parameter
-    print("Please enter below info of HX-Cluster:")
+    print("\nPlease enter below info of HX-Cluster:")
     hxusername = "root"
     log_msg(INFO, "Username: " + hxusername + "\r")
     hxpassword = getpass.getpass("Enter the HX-Cluster Root Password: ")
